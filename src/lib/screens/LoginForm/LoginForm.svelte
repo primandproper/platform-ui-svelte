@@ -34,6 +34,7 @@
 <form
   {method}
   {action}
+  data-part="login-form"
   use:enhance={() => {
     return async ({ result }) => {
       if (result.type === 'redirect') {

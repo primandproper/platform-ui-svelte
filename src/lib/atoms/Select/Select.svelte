@@ -27,7 +27,7 @@
   }: Props = $props();
 </script>
 
-<select {id} {name} {required} {disabled} class="select-input {className}" bind:value>
+<select {id} {name} {required} {disabled} class="select-input {className}" data-part="select" bind:value>
   {#if placeholder}
     <option value="" disabled>{placeholder}</option>
   {/if}
@@ -37,30 +37,32 @@
 </select>
 
 <style>
-  .select-input {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-sans);
-    font-size: var(--font-size-base);
-    color: var(--color-text);
-    background: var(--color-surface);
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition:
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
-  }
+  @layer platform-ui {
+    .select-input {
+      width: 100%;
+      padding: var(--pp-space-sm);
+      border: 1px solid var(--pp-color-border);
+      border-radius: var(--pp-radius-sm);
+      font-family: var(--pp-font-sans);
+      font-size: var(--pp-font-size-base);
+      color: var(--pp-color-text);
+      background: var(--pp-color-surface);
+      cursor: pointer;
+      box-shadow: var(--pp-shadow-sm);
+      transition:
+        border-color var(--pp-transition-fast),
+        box-shadow var(--pp-transition-fast);
+    }
 
-  .select-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-muted);
-  }
+    .select-input:focus {
+      outline: none;
+      border-color: var(--pp-color-primary);
+      box-shadow: 0 0 0 2px var(--pp-color-primary-muted);
+    }
 
-  .select-input:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    .select-input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 </style>

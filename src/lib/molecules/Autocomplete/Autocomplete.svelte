@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   interface Props {
     id?: string;
     value?: string;
@@ -12,6 +14,8 @@
     onInput?: (value: string) => void;
     onSelect?: (item: { id: string; label: string }) => void;
     onBlur?: () => void;
+    /** Replaces how each suggestion renders inside its option. */
+    option?: Snippet<[{ item: { id: string; label: string }; focused: boolean }]>;
   }
 
   let {
@@ -27,6 +31,7 @@
     onInput,
     onSelect,
     onBlur,
+    option,
   }: Props = $props();
 
   let open = $state(false);
@@ -76,7 +81,7 @@
   }
 </script>
 
-<div class="autocomplete-wrapper">
+<div class="autocomplete-wrapper" data-part="autocomplete" data-open={open || undefined}>
   <input
     {id}
     type="text"
@@ -84,6 +89,7 @@
     {required}
     {disabled}
     class="autocomplete-input {className}"
+    data-part="autocomplete-input"
     bind:value
     oninput={handleInput}
     onkeydown={handleKeydown}
@@ -97,22 +103,28 @@
     data-testid={dataTestId}
   />
   {#if loading}
-    <span class="autocomplete-loading" aria-hidden="true">...</span>
+    <span class="autocomplete-loading" data-part="autocomplete-loading" aria-hidden="true">...</span>
   {/if}
   {#if open && (suggestions.length > 0 || loading)}
-    <ul id="autocomplete-list-{id ?? 'default'}" class="autocomplete-list" role="listbox">
+    <ul id="autocomplete-list-{id ?? 'default'}" class="autocomplete-list" data-part="autocomplete-list" role="listbox">
       {#each suggestions as item, i (item.id)}
         <li
           role="option"
           aria-selected={i === focusedIndex}
           class="autocomplete-option"
           class:autocomplete-option--focused={i === focusedIndex}
+          data-part="autocomplete-option"
+          data-focused={i === focusedIndex || undefined}
           onmousedown={(e) => {
             e.preventDefault();
             select(item);
           }}
         >
-          {item.label}
+          {#if option}
+            {@render option({ item, focused: i === focusedIndex })}
+          {:else}
+            {item.label}
+          {/if}
         </li>
       {/each}
     </ul>
@@ -120,71 +132,73 @@
 </div>
 
 <style>
-  .autocomplete-wrapper {
-    position: relative;
-    width: 100%;
-  }
+  @layer platform-ui {
+    .autocomplete-wrapper {
+      position: relative;
+      width: 100%;
+    }
 
-  .autocomplete-input {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-sans);
-    font-size: var(--font-size-base);
-    color: var(--color-text);
-    box-shadow: var(--shadow-sm);
-    transition:
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
-  }
+    .autocomplete-input {
+      width: 100%;
+      padding: var(--pp-space-sm);
+      border: 1px solid var(--pp-color-border);
+      border-radius: var(--pp-radius-sm);
+      font-family: var(--pp-font-sans);
+      font-size: var(--pp-font-size-base);
+      color: var(--pp-color-text);
+      box-shadow: var(--pp-shadow-sm);
+      transition:
+        border-color var(--pp-transition-fast),
+        box-shadow var(--pp-transition-fast);
+    }
 
-  .autocomplete-input::placeholder {
-    color: var(--color-text-muted);
-  }
+    .autocomplete-input::placeholder {
+      color: var(--pp-color-text-muted);
+    }
 
-  .autocomplete-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-muted);
-  }
+    .autocomplete-input:focus {
+      outline: none;
+      border-color: var(--pp-color-primary);
+      box-shadow: 0 0 0 2px var(--pp-color-primary-muted);
+    }
 
-  .autocomplete-loading {
-    position: absolute;
-    right: var(--space-sm);
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-  }
+    .autocomplete-loading {
+      position: absolute;
+      right: var(--pp-space-sm);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--pp-color-text-muted);
+      font-size: 0.875rem;
+    }
 
-  .autocomplete-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border: 1px solid var(--color-border);
-    border-top: none;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    background: var(--color-surface);
-    max-height: 12rem;
-    overflow-y: auto;
-    z-index: 50;
-    box-shadow: var(--shadow-md);
-  }
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid var(--pp-color-border);
+      border-top: none;
+      border-radius: 0 0 var(--pp-radius-sm) var(--pp-radius-sm);
+      background: var(--pp-color-surface);
+      max-height: 12rem;
+      overflow-y: auto;
+      z-index: 50;
+      box-shadow: var(--pp-shadow-md);
+    }
 
-  .autocomplete-option {
-    padding: var(--space-sm) var(--space-md);
-    cursor: pointer;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-  }
+    .autocomplete-option {
+      padding: var(--pp-space-sm) var(--pp-space-md);
+      cursor: pointer;
+      font-family: var(--pp-font-sans);
+      font-size: 1rem;
+    }
 
-  .autocomplete-option:hover,
-  .autocomplete-option--focused {
-    background: var(--color-surface-alt);
+    .autocomplete-option:hover,
+    .autocomplete-option--focused {
+      background: var(--pp-color-surface-alt);
+    }
   }
 </style>

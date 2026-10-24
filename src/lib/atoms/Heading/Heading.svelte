@@ -14,36 +14,38 @@
   const Tag = $derived(`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6');
 </script>
 
-<svelte:element this={Tag} class="heading heading--{level} {className}">
+<svelte:element this={Tag} class="heading heading--{level} {className}" data-part="heading" data-level={level}>
   {#if children}
     {@render children()}
   {/if}
 </svelte:element>
 
 <style>
-  .heading {
-    font-family: var(--font-sans);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-tight);
-    color: var(--color-text);
-    margin: 0 0 0.5em;
-  }
-  .heading--1 {
-    font-size: var(--font-size-3xl);
-  }
-  .heading--2 {
-    font-size: var(--font-size-2xl);
-  }
-  .heading--3 {
-    font-size: var(--font-size-xl);
-  }
-  .heading--4 {
-    font-size: var(--font-size-lg);
-  }
-  .heading--5 {
-    font-size: var(--font-size-base);
-  }
-  .heading--6 {
-    font-size: var(--font-size-sm);
+  @layer platform-ui {
+    .heading {
+      font-family: var(--pp-font-sans);
+      font-weight: var(--pp-font-weight-semibold);
+      line-height: var(--pp-line-height-tight);
+      color: var(--pp-color-text);
+      margin: 0 0 0.5em;
+    }
+    .heading--1 {
+      font-size: var(--pp-font-size-3xl);
+    }
+    .heading--2 {
+      font-size: var(--pp-font-size-2xl);
+    }
+    .heading--3 {
+      font-size: var(--pp-font-size-xl);
+    }
+    .heading--4 {
+      font-size: var(--pp-font-size-lg);
+    }
+    .heading--5 {
+      font-size: var(--pp-font-size-base);
+    }
+    .heading--6 {
+      font-size: var(--pp-font-size-sm);
+    }
   }
 </style>

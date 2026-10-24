@@ -10,30 +10,32 @@
   let { variant = 'info', class: className = '', children }: Props = $props();
 </script>
 
-<div class="alert alert--{variant} {className}" role="alert">
+<div class="alert alert--{variant} {className}" role="alert" data-part="alert" data-variant={variant}>
   {#if children}
     {@render children()}
   {/if}
 </div>
 
 <style>
-  .alert {
-    padding: var(--space-md);
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--space-md);
-    font-family: var(--font-sans);
-    box-shadow: var(--shadow-sm);
-  }
+  @layer platform-ui {
+    .alert {
+      padding: var(--pp-space-md);
+      border-radius: var(--pp-radius-sm);
+      margin-bottom: var(--pp-space-md);
+      font-family: var(--pp-font-sans);
+      box-shadow: var(--pp-shadow-sm);
+    }
 
-  .alert--error {
-    color: var(--color-error);
-    background: var(--color-error-muted);
-    border: 1px solid var(--color-error);
-  }
+    .alert--error {
+      color: var(--pp-color-error);
+      background: var(--pp-color-error-muted);
+      border: 1px solid var(--pp-color-error);
+    }
 
-  .alert--info {
-    color: var(--color-text);
-    background: var(--color-surface-alt);
-    border: 1px solid var(--color-border);
+    .alert--info {
+      color: var(--pp-color-text);
+      background: var(--pp-color-surface-alt);
+      border: 1px solid var(--pp-color-border);
+    }
   }
 </style>

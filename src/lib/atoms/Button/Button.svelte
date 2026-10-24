@@ -22,52 +22,62 @@
   }: Props = $props();
 </script>
 
-<button {id} {type} {disabled} {onclick} class="btn btn--{variant} {className}">
+<button
+  {id}
+  {type}
+  {disabled}
+  {onclick}
+  class="btn btn--{variant} {className}"
+  data-part="button"
+  data-variant={variant}
+>
   {#if children}
     {@render children()}
   {/if}
 </button>
 
 <style>
-  .btn {
-    padding: var(--space-sm) var(--space-md);
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-family: var(--font-sans);
-    font-weight: var(--font-weight-medium);
-    box-shadow: var(--shadow-sm);
-    transition:
-      background var(--transition-fast),
-      box-shadow var(--transition-fast);
-  }
+  @layer platform-ui {
+    .btn {
+      padding: var(--pp-space-sm) var(--pp-space-md);
+      border: none;
+      border-radius: var(--pp-radius-sm);
+      cursor: pointer;
+      font-family: var(--pp-font-sans);
+      font-weight: var(--pp-font-weight-medium);
+      box-shadow: var(--pp-shadow-sm);
+      transition:
+        background var(--pp-transition-fast),
+        box-shadow var(--pp-transition-fast);
+    }
 
-  .btn:focus-visible {
-    outline: none;
-    box-shadow: var(--shadow-focus);
-  }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--pp-shadow-focus);
+    }
 
-  .btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-  .btn--primary {
-    background: var(--color-primary);
-    color: var(--color-surface);
-  }
+    .btn--primary {
+      background: var(--pp-color-primary);
+      color: var(--pp-color-surface);
+    }
 
-  .btn--primary:hover:not(:disabled) {
-    background: var(--color-primary-hover);
-  }
+    .btn--primary:hover:not(:disabled) {
+      background: var(--pp-color-primary-hover);
+    }
 
-  .btn--default {
-    background: var(--color-surface-alt);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-  }
+    .btn--default {
+      background: var(--pp-color-surface-alt);
+      color: var(--pp-color-text);
+      border: 1px solid var(--pp-color-border);
+    }
 
-  .btn--default:hover:not(:disabled) {
-    background: var(--color-border);
+    .btn--default:hover:not(:disabled) {
+      background: var(--pp-color-border);
+    }
   }
 </style>
