@@ -1,3 +1,5 @@
+import './theme.css';
+
 export { default as Alert } from './layout/Alert/Alert.svelte';
 export { default as Autocomplete } from './molecules/Autocomplete/Autocomplete.svelte';
 export { default as Button } from './atoms/Button/Button.svelte';

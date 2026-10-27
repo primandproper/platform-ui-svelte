@@ -10,23 +10,25 @@
   let { href, class: className = '', children }: Props = $props();
 </script>
 
-<a {href} class="link {className}">
+<a {href} class="link {className}" data-part="link">
   {#if children}
     {@render children()}
   {/if}
 </a>
 
 <style>
-  .link {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-family: var(--font-sans);
-    transition:
-      color var(--transition-fast),
-      text-decoration-color var(--transition-fast);
-  }
+  @layer platform-ui {
+    .link {
+      color: var(--pp-color-primary);
+      text-decoration: none;
+      font-family: var(--pp-font-sans);
+      transition:
+        color var(--pp-transition-fast),
+        text-decoration-color var(--pp-transition-fast);
+    }
 
-  .link:hover {
-    text-decoration: underline;
+    .link:hover {
+      text-decoration: underline;
+    }
   }
 </style>

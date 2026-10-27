@@ -47,33 +47,36 @@
   {required}
   {disabled}
   class="number-input {className}"
+  data-part="number-input"
   bind:value
   oninput={handleInput}
   data-testid={dataTestId}
 />
 
 <style>
-  .number-input {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-sans);
-    font-size: var(--font-size-base);
-    color: var(--color-text);
-    box-shadow: var(--shadow-sm);
-    transition:
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
-  }
+  @layer platform-ui {
+    .number-input {
+      width: 100%;
+      padding: var(--pp-space-sm);
+      border: 1px solid var(--pp-color-border);
+      border-radius: var(--pp-radius-sm);
+      font-family: var(--pp-font-sans);
+      font-size: var(--pp-font-size-base);
+      color: var(--pp-color-text);
+      box-shadow: var(--pp-shadow-sm);
+      transition:
+        border-color var(--pp-transition-fast),
+        box-shadow var(--pp-transition-fast);
+    }
 
-  .number-input::placeholder {
-    color: var(--color-text-muted);
-  }
+    .number-input::placeholder {
+      color: var(--pp-color-text-muted);
+    }
 
-  .number-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-muted);
+    .number-input:focus {
+      outline: none;
+      border-color: var(--pp-color-primary);
+      box-shadow: 0 0 0 2px var(--pp-color-primary-muted);
+    }
   }
 </style>

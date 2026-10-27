@@ -10,18 +10,20 @@
   let { for: forId, class: className = '', children }: Props = $props();
 </script>
 
-<label for={forId} class="label {className}">
+<label for={forId} class="label {className}" data-part="label">
   {#if children}
     {@render children()}
   {/if}
 </label>
 
 <style>
-  .label {
-    display: block;
-    margin-bottom: var(--space-xs);
-    font-weight: var(--font-weight-medium);
-    font-family: var(--font-sans);
-    color: var(--color-text);
+  @layer platform-ui {
+    .label {
+      display: block;
+      margin-bottom: var(--pp-space-xs);
+      font-weight: var(--pp-font-weight-medium);
+      font-family: var(--pp-font-sans);
+      color: var(--pp-color-text);
+    }
   }
 </style>

@@ -12,34 +12,40 @@
   let { narrow = false, wide = false, class: className = '', children }: Props = $props();
 </script>
 
-<main class="page-container {narrow ? 'page-container--narrow' : ''} {wide ? 'page-container--wide' : ''} {className}">
+<main
+  class="page-container {narrow ? 'page-container--narrow' : ''} {wide ? 'page-container--wide' : ''} {className}"
+  data-part="page-container"
+  data-width={wide ? 'wide' : narrow ? 'narrow' : undefined}
+>
   {#if children}
     {@render children()}
   {/if}
 </main>
 
 <style>
-  .page-container {
-    max-width: var(--content-max-width);
-    margin: var(--space-lg) auto;
-    padding: var(--space-md);
-  }
+  @layer platform-ui {
+    .page-container {
+      max-width: var(--pp-content-max-width);
+      margin: var(--pp-space-lg) auto;
+      padding: var(--pp-space-md);
+    }
 
-  .page-container--narrow {
-    max-width: var(--content-max-width-narrow);
-  }
+    .page-container--narrow {
+      max-width: var(--pp-content-max-width-narrow);
+    }
 
-  .page-container--wide {
-    max-width: 70vw;
-    margin-left: 15vw;
-    margin-right: auto;
-  }
-
-  @media (max-width: 768px) {
     .page-container--wide {
-      max-width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+      max-width: 70vw;
+      margin-left: 15vw;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+      .page-container--wide {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
   }
 </style>
