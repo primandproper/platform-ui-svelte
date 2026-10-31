@@ -9,7 +9,9 @@
   },
   "type": "module",
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "./dist/index.js",
+    "./dist/screens.js"
   ],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,6 +24,7 @@
       "types": "./dist/screens.d.ts",
       "svelte": "./dist/screens.js"
     },
+    "./theme.css": "./dist/theme.css",
     "./package.json": "./package.json"
   },
   "files": [

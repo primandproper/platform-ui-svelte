@@ -27,6 +27,11 @@ test: typecheck
 build:
 	pnpm run build
 
+# Builds a minimal consumer against the packed tarball and fails if the default theme is not in its output.
+.PHONY: consumer-check
+consumer-check: build
+	./scripts/consumer-check.sh
+
 .PHONY: release
 release:
 	./scripts/publish.sh
