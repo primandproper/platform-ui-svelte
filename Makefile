@@ -26,3 +26,7 @@ test: typecheck
 .PHONY: build
 build:
 	pnpm run build
+
+.PHONY: release
+release:
+	./scripts/publish.sh
