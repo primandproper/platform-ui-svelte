@@ -22,9 +22,10 @@ jobs:
       - uses: ./.github/actions/setup
       - run: make test
 
+  # `make consumer-check` builds the package first.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: make build
+      - run: make consumer-check

@@ -88,7 +88,7 @@ if git rev-parse --quiet --verify "refs/tags/$TAG" >/dev/null || git ls-remote -
   exit 1
 fi
 
-make install format-check lint test build
+make install format-check lint test consumer-check
 
 # The git checks pnpm would make are the ones above, made before the build rather than after it.
 pnpm publish --no-git-checks --tag "$DIST_TAG"

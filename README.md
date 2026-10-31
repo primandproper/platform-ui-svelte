@@ -21,8 +21,14 @@ Seeded from DDB's `frontend/packages/ui`; see
 ## Customizing
 
 One library, apps that look nothing alike. Importing either entry point loads the default theme, so a component renders
-correctly with no CSS from the app at all. From there an app has two levers, and neither needs `:global` or
-`!important`.
+correctly with no CSS from the app at all. An app that would rather not lean on its bundler for that can import it
+explicitly:
+
+```js
+import '@primandproper/platform-ui/theme.css';
+```
+
+From there an app has two levers, and neither needs `:global` or `!important`.
 
 **Tokens.** Every value the components read is a custom property in the `--pp-` namespace. Set any of them, anywhere:
 
@@ -90,8 +96,10 @@ Defaults are in [`src/lib/theme.css`](src/lib/theme.css).
 ```sh
 make install
 make format lint test
-make build
+make consumer-check
 ```
 
 `pnpm exec vite dev` serves `src/routes`: a gallery of every component at `/` and the restyling demo at `/themed`.
-Neither is part of the package.
+Neither is part of the package, and both import from `$lib`, so they cannot see what a consumer's production build
+keeps. `make consumer-check` can: it builds a minimal app against the packed tarball and fails if the default theme is
+missing from the output.
